@@ -37,6 +37,7 @@ fn main() {
         println!("{}", dir);
         let config = Config::from_config_file(dir + "/config.toml").unwrap();
         println!("{}", config.com_port);
+        use_port = config.com_port;
     }
 
     loop {
