@@ -52,11 +52,12 @@ pub fn punch_entry(
         let mut in_times: Vec<String> = Vec::new();
         let mut out_times: Vec<String> = Vec::new();
 
-        let query = "SELECT DIRECTION FROM LOG WHERE PERMAID = :permaid ORDER BY LOGID DESC";
+        let query = "SELECT DIRECTION FROM LOG WHERE PERMAID = :permaid AND DATE(PNCH) = :time ORDER BY LOGID DESC";
         let output: Vec<Option<String>> = conn.exec(
             query,
             params! {
-                "permaid" => permaid
+                "permaid" => permaid,
+                "time" => time_now[0..10].to_string()
             },
         )?;
 
