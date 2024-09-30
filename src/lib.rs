@@ -1,3 +1,5 @@
+use std::io::Write;
+
 use chrono::{Duration, NaiveTime};
 use mysql::prelude::*;
 use mysql::*;
@@ -104,10 +106,23 @@ pub fn punch_entry(
                 }
             }
             Mode::Calc => {
+                let mut permaid = String::new();
+                print!("Permaid: ");
+                std::io::stdout().flush().unwrap();
+                std::io::stdin()
+                    .read_line(&mut permaid)
+                    .expect("Failed to read user input!");
+                let mut time_now = String::new();
+                print!("Date: ");
+                std::io::stdout().flush().unwrap();
+                std::io::stdin()
+                    .read_line(&mut time_now)
+                    .expect("Failed to read user input!");
+
                 let query = "SELECT DATE_FORMAT(PNCH, '%H:%i:%s') AS PNCH, DIRECTION FROM LOG WHERE PERMAID = :permaid AND DATE(PNCH) = :date ORDER BY PNCH ASC";
                 let times: Vec<(String, String)> = conn.exec_map(
                     query,
-                    params! {"permaid" => permaid, "date" => time_now[0..10].to_string()},
+                    params! {"permaid" => permaid, "date" => time_now},
                     |(t_time, t_direction)| (t_time, t_direction),
                 )?;
 
