@@ -1,0 +1,9 @@
+[package]
+name = "pnchcrd"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+chrono = "0.4.38"
+mysql = "25.0.1"
+serialport = "4.5.0"
