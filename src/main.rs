@@ -1,4 +1,11 @@
+use config_file::FromConfigFile;
+use serde::Deserialize;
 use std::{env, io, time::Duration};
+
+#[derive(Deserialize)]
+struct Config {
+    com_port: String,
+}
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -16,13 +23,20 @@ fn main() {
     let ports = serialport::available_ports().expect("No ports found");
     let mut use_port = String::new();
 
-    for i in ports {
-        println!("{}", i.port_name);
-        if i.port_name.len() == 12 {
-            if i.port_name[8..11].to_string() == "ACM".to_string() {
-                use_port = i.port_name;
+    if cfg!(unix) {
+        for i in ports {
+            println!("{}", i.port_name);
+            if i.port_name.len() == 12 {
+                if i.port_name[8..11].to_string() == "ACM".to_string() {
+                    use_port = i.port_name;
+                }
             }
         }
+    } else {
+        let dir = env::current_dir().unwrap().to_str().unwrap().to_string();
+        println!("{}", dir);
+        let config = Config::from_config_file(dir + "/config.toml").unwrap();
+        println!("{}", config.com_port);
     }
 
     loop {

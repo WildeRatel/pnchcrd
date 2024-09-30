@@ -5,5 +5,7 @@ edition = "2021"
 
 [dependencies]
 chrono = "0.4.38"
+config-file = "0.2.3"
 mysql = "25.0.1"
+serde = "1.0.210"
 serialport = "4.5.0"
