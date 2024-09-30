@@ -16,7 +16,7 @@ pub fn punch_entry(
 ) -> std::result::Result<Vec<String>, Box<dyn std::error::Error>> {
     let mut param_vec: Vec<String> = Vec::new();
     let time_now = chrono::offset::Local::now().to_string()[0..19].to_string();
-    let url = "mysql://root:F00z@804@localhost:3306/PNCHCRD";
+    let url = "mysql://root:F00z@999@localhost:3306/PNCHCRD";
     let pool = Pool::new(url)?;
 
     let mut conn = pool.get_conn()?;
