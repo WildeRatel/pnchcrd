@@ -4,6 +4,7 @@ use chrono::{Duration, NaiveTime};
 use mysql::prelude::*;
 use mysql::*;
 
+// mode enum that dictates if the program is writing logs or calculating a time diff
 #[derive(Clone)]
 pub enum Mode {
     Punc,
