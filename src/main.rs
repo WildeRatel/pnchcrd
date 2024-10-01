@@ -15,18 +15,23 @@ fn main() {
         panic!("Please only provide one argument!");
     }
 
+// select mode enum
     let mode = match args[1].as_str() {
         "P" => pnchcrd::Mode::Punc,
         "C" => pnchcrd::Mode::Calc,
         _ => panic!("Incorrect mode syntax! Use P for punch mode and C for calc mode!"),
     };
 
+// get all available ports
     let ports = serialport::available_ports().expect("No ports found");
     let mut use_port = String::new();
 
+// check os
     if cfg!(unix) {
         for i in ports {
             println!("{}", i.port_name);
+
+// if it is a unix system the arduino will always be ACM followed by a number
             if i.port_name.len() == 12 {
                 if i.port_name[8..11].to_string() == "ACM".to_string() {
                     use_port = i.port_name;
@@ -34,6 +39,7 @@ fn main() {
             }
         }
     } else {
+// load preconfigured COM from config for windows
         let dir = env::current_dir().unwrap().to_str().unwrap().to_string();
         println!("{}", dir);
         let config = Config::from_config_file(dir + "/config.toml").unwrap();
