@@ -2,6 +2,7 @@ use config_file::FromConfigFile;
 use serde::Deserialize;
 use std::{env, io, time::Duration};
 
+// used to load COM port from config.toml if windows is being used.
 #[derive(Deserialize)]
 struct Config {
     com_port: String,
