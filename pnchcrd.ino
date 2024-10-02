@@ -21,7 +21,6 @@ void setup() {
   lcd.backlight();
   lcd.clear();
   lcd.blink_on();
-  lcd.
   lcd.setCursor(0, 0);
   lcd.print("PNCHR");
   lcd.setDelay(0, 0);
